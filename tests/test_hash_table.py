@@ -62,6 +62,18 @@ class HashTableTests(unittest.TestCase):
             with self.subTest(key=key):
                 self.assertEqual(self.table.get(key), value)
 
+    def test_none_max_load_disables_resizing_and_counts_probes(self):
+        table = HashTable(capacity=8, max_load=None)
+        for key in ("a", "i", "q"):
+            table.put(key, key)
+
+        self.assertEqual(table.capacity, 8)
+        self.assertEqual(len(table), 3)
+        self.assertEqual(table.probe_count("q"), 1)
+        self.assertEqual(table.probe_count("i"), 2)
+        self.assertEqual(table.probe_count("a"), 3)
+        self.assertEqual(table.probe_count("y"), 3)
+
 
 if __name__ == "__main__":
     unittest.main()

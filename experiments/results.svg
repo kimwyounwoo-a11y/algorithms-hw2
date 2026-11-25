@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600">
+<title>Hash table probe counts by load factor</title>
+<rect width="100%" height="100%" fill="white"/>
+<text x="480" y="30" text-anchor="middle" font-family="sans-serif" font-size="20">Probe counts by load factor</text>
+<line x1="82" y1="532.00" x2="930" y2="532.00" stroke="#e5e7eb"/>
+<text x="70" y="537.00" text-anchor="end" font-family="sans-serif" font-size="12">0</text>
+<line x1="82" y1="442.00" x2="930" y2="442.00" stroke="#e5e7eb"/>
+<text x="70" y="447.00" text-anchor="end" font-family="sans-serif" font-size="12">1</text>
+<line x1="82" y1="352.00" x2="930" y2="352.00" stroke="#e5e7eb"/>
+<text x="70" y="357.00" text-anchor="end" font-family="sans-serif" font-size="12">2</text>
+<line x1="82" y1="262.00" x2="930" y2="262.00" stroke="#e5e7eb"/>
+<text x="70" y="267.00" text-anchor="end" font-family="sans-serif" font-size="12">3</text>
+<line x1="82" y1="172.00" x2="930" y2="172.00" stroke="#e5e7eb"/>
+<text x="70" y="177.00" text-anchor="end" font-family="sans-serif" font-size="12">4</text>
+<line x1="82" y1="82.00" x2="930" y2="82.00" stroke="#e5e7eb"/>
+<text x="70" y="87.00" text-anchor="end" font-family="sans-serif" font-size="12">5</text>
+<line x1="82.00" y1="82" x2="82.00" y2="532" stroke="#f3f4f6"/>
+<text x="82.00" y="554" text-anchor="middle" font-family="sans-serif" font-size="10">0.25</text>
+<line x1="138.52" y1="82" x2="138.52" y2="532" stroke="#f3f4f6"/>
+<text x="138.52" y="554" text-anchor="middle" font-family="sans-serif" font-size="10">0.50</text>
+<line x1="195.09" y1="82" x2="195.09" y2="532" stroke="#f3f4f6"/>
+<text x="195.09" y="554" text-anchor="middle" font-family="sans-serif" font-size="10">0.75</text>
+<line x1="251.61" y1="82" x2="251.61" y2="532" stroke="#f3f4f6"/>
+<text x="251.61" y="554" text-anchor="middle" font-family="sans-serif" font-size="10">1.00</text>
+<line x1="308.13" y1="82" x2="308.13" y2="532" stroke="#f3f4f6"/>
+<text x="308.13" y="554" text-anchor="middle" font-family="sans-serif" font-size="10">1.25</text>
+<line x1="364.70" y1="82" x2="364.70" y2="532" stroke="#f3f4f6"/>
+<text x="364.70" y="554" text-anchor="middle" font-family="sans-serif" font-size="10">1.50</text>
+<line x1="421.22" y1="82" x2="421.22" y2="532" stroke="#f3f4f6"/>
+<text x="421.22" y="554" text-anchor="middle" font-family="sans-serif" font-size="10">1.75</text>
+<line x1="477.74" y1="82" x2="477.74" y2="532" stroke="#f3f4f6"/>
+<text x="477.74" y="554" text-anchor="middle" font-family="sans-serif" font-size="10">2.00</text>
+<line x1="534.26" y1="82" x2="534.26" y2="532" stroke="#f3f4f6"/>
+<text x="534.26" y="554" text-anchor="middle" font-family="sans-serif" font-size="10">2.25</text>
+<line x1="590.78" y1="82" x2="590.78" y2="532" stroke="#f3f4f6"/>
+<text x="590.78" y="554" text-anchor="middle" font-family="sans-serif" font-size="10">2.50</text>
+<line x1="647.35" y1="82" x2="647.35" y2="532" stroke="#f3f4f6"/>
+<text x="647.35" y="554" text-anchor="middle" font-family="sans-serif" font-size="10">2.75</text>
+<line x1="703.87" y1="82" x2="703.87" y2="532" stroke="#f3f4f6"/>
+<text x="703.87" y="554" text-anchor="middle" font-family="sans-serif" font-size="10">3.00</text>
+<line x1="760.39" y1="82" x2="760.39" y2="532" stroke="#f3f4f6"/>
+<text x="760.39" y="554" text-anchor="middle" font-family="sans-serif" font-size="10">3.25</text>
+<line x1="816.96" y1="82" x2="816.96" y2="532" stroke="#f3f4f6"/>
+<text x="816.96" y="554" text-anchor="middle" font-family="sans-serif" font-size="10">3.50</text>
+<line x1="873.48" y1="82" x2="873.48" y2="532" stroke="#f3f4f6"/>
+<text x="873.48" y="554" text-anchor="middle" font-family="sans-serif" font-size="10">3.75</text>
+<line x1="930.00" y1="82" x2="930.00" y2="532" stroke="#f3f4f6"/>
+<text x="930.00" y="554" text-anchor="middle" font-family="sans-serif" font-size="10">4.00</text>
+<line x1="82" y1="532" x2="930" y2="532" stroke="#111827"/>
+<line x1="82" y1="82" x2="82" y2="532" stroke="#111827"/>
+<text x="506.00" y="582" text-anchor="middle" font-family="sans-serif" font-size="14">Load factor (alpha)</text>
+<text x="20" y="307.00" text-anchor="middle" transform="rotate(-90 20 307.00)" font-family="sans-serif" font-size="14">Mean nodes compared</text>
+<polyline points="82.00,430.12 138.52,419.43 195.09,408.70 251.61,398.88 308.13,385.14 364.70,372.92 421.22,364.92 477.74,352.09 534.26,341.93 590.78,329.67 647.35,318.07 703.87,308.66 760.39,296.94 816.96,284.74 873.48,273.48 930.00,261.96" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+<circle cx="82.00" cy="430.12" r="2.5" fill="#2563eb"/>
+<circle cx="138.52" cy="419.43" r="2.5" fill="#2563eb"/>
+<circle cx="195.09" cy="408.70" r="2.5" fill="#2563eb"/>
+<circle cx="251.61" cy="398.88" r="2.5" fill="#2563eb"/>
+<circle cx="308.13" cy="385.14" r="2.5" fill="#2563eb"/>
+<circle cx="364.70" cy="372.92" r="2.5" fill="#2563eb"/>
+<circle cx="421.22" cy="364.92" r="2.5" fill="#2563eb"/>
+<circle cx="477.74" cy="352.09" r="2.5" fill="#2563eb"/>
+<circle cx="534.26" cy="341.93" r="2.5" fill="#2563eb"/>
+<circle cx="590.78" cy="329.67" r="2.5" fill="#2563eb"/>
+<circle cx="647.35" cy="318.07" r="2.5" fill="#2563eb"/>
+<circle cx="703.87" cy="308.66" r="2.5" fill="#2563eb"/>
+<circle cx="760.39" cy="296.94" r="2.5" fill="#2563eb"/>
+<circle cx="816.96" cy="284.74" r="2.5" fill="#2563eb"/>
+<circle cx="873.48" cy="273.48" r="2.5" fill="#2563eb"/>
+<circle cx="930.00" cy="261.96" r="2.5" fill="#2563eb"/>
+<line x1="82" y1="52" x2="110" y2="52" stroke="#2563eb" stroke-width="2.5"/>
+<text x="118" y="56" font-family="sans-serif" font-size="12">Success measured</text>
+<polyline points="82.00,430.75 138.52,419.51 195.09,408.25 251.61,397.00 308.13,385.75 364.70,374.49 421.22,363.25 477.74,352.00 534.26,340.75 590.78,329.51 647.35,318.25 703.87,307.00 760.39,295.75 816.96,284.49 873.48,273.25 930.00,262.00" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="7 5"/>
+<circle cx="82.00" cy="430.75" r="2.5" fill="#2563eb"/>
+<circle cx="138.52" cy="419.51" r="2.5" fill="#2563eb"/>
+<circle cx="195.09" cy="408.25" r="2.5" fill="#2563eb"/>
+<circle cx="251.61" cy="397.00" r="2.5" fill="#2563eb"/>
+<circle cx="308.13" cy="385.75" r="2.5" fill="#2563eb"/>
+<circle cx="364.70" cy="374.49" r="2.5" fill="#2563eb"/>
+<circle cx="421.22" cy="363.25" r="2.5" fill="#2563eb"/>
+<circle cx="477.74" cy="352.00" r="2.5" fill="#2563eb"/>
+<circle cx="534.26" cy="340.75" r="2.5" fill="#2563eb"/>
+<circle cx="590.78" cy="329.51" r="2.5" fill="#2563eb"/>
+<circle cx="647.35" cy="318.25" r="2.5" fill="#2563eb"/>
+<circle cx="703.87" cy="307.00" r="2.5" fill="#2563eb"/>
+<circle cx="760.39" cy="295.75" r="2.5" fill="#2563eb"/>
+<circle cx="816.96" cy="284.49" r="2.5" fill="#2563eb"/>
+<circle cx="873.48" cy="273.25" r="2.5" fill="#2563eb"/>
+<circle cx="930.00" cy="262.00" r="2.5" fill="#2563eb"/>
+<line x1="492" y1="52" x2="520" y2="52" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="7 5"/>
+<text x="528" y="56" font-family="sans-serif" font-size="12">Success theory: 1 + alpha/2</text>
+<polyline points="82.00,508.71 138.52,488.64 195.09,464.65 251.61,440.22 308.13,419.95 364.70,398.09 421.22,374.12 477.74,351.69 534.26,330.56 590.78,305.23 647.35,283.61 703.87,262.31 760.39,241.18 816.96,217.32 873.48,197.31 930.00,173.10" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+<circle cx="82.00" cy="508.71" r="2.5" fill="#dc2626"/>
+<circle cx="138.52" cy="488.64" r="2.5" fill="#dc2626"/>
+<circle cx="195.09" cy="464.65" r="2.5" fill="#dc2626"/>
+<circle cx="251.61" cy="440.22" r="2.5" fill="#dc2626"/>
+<circle cx="308.13" cy="419.95" r="2.5" fill="#dc2626"/>
+<circle cx="364.70" cy="398.09" r="2.5" fill="#dc2626"/>
+<circle cx="421.22" cy="374.12" r="2.5" fill="#dc2626"/>
+<circle cx="477.74" cy="351.69" r="2.5" fill="#dc2626"/>
+<circle cx="534.26" cy="330.56" r="2.5" fill="#dc2626"/>
+<circle cx="590.78" cy="305.23" r="2.5" fill="#dc2626"/>
+<circle cx="647.35" cy="283.61" r="2.5" fill="#dc2626"/>
+<circle cx="703.87" cy="262.31" r="2.5" fill="#dc2626"/>
+<circle cx="760.39" cy="241.18" r="2.5" fill="#dc2626"/>
+<circle cx="816.96" cy="217.32" r="2.5" fill="#dc2626"/>
+<circle cx="873.48" cy="197.31" r="2.5" fill="#dc2626"/>
+<circle cx="930.00" cy="173.10" r="2.5" fill="#dc2626"/>
+<line x1="82" y1="70" x2="110" y2="70" stroke="#dc2626" stroke-width="2.5"/>
+<text x="118" y="74" font-family="sans-serif" font-size="12">Failure measured</text>
+<polyline points="82.00,509.51 138.52,487.01 195.09,464.49 251.61,442.00 308.13,419.51 364.70,396.99 421.22,374.49 477.74,352.00 534.26,329.51 590.78,307.01 647.35,284.49 703.87,262.00 760.39,239.51 816.96,216.99 873.48,194.49 930.00,172.00" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="7 5"/>
+<circle cx="82.00" cy="509.51" r="2.5" fill="#dc2626"/>
+<circle cx="138.52" cy="487.01" r="2.5" fill="#dc2626"/>
+<circle cx="195.09" cy="464.49" r="2.5" fill="#dc2626"/>
+<circle cx="251.61" cy="442.00" r="2.5" fill="#dc2626"/>
+<circle cx="308.13" cy="419.51" r="2.5" fill="#dc2626"/>
+<circle cx="364.70" cy="396.99" r="2.5" fill="#dc2626"/>
+<circle cx="421.22" cy="374.49" r="2.5" fill="#dc2626"/>
+<circle cx="477.74" cy="352.00" r="2.5" fill="#dc2626"/>
+<circle cx="534.26" cy="329.51" r="2.5" fill="#dc2626"/>
+<circle cx="590.78" cy="307.01" r="2.5" fill="#dc2626"/>
+<circle cx="647.35" cy="284.49" r="2.5" fill="#dc2626"/>
+<circle cx="703.87" cy="262.00" r="2.5" fill="#dc2626"/>
+<circle cx="760.39" cy="239.51" r="2.5" fill="#dc2626"/>
+<circle cx="816.96" cy="216.99" r="2.5" fill="#dc2626"/>
+<circle cx="873.48" cy="194.49" r="2.5" fill="#dc2626"/>
+<circle cx="930.00" cy="172.00" r="2.5" fill="#dc2626"/>
+<line x1="492" y1="70" x2="520" y2="70" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="7 5"/>
+<text x="528" y="74" font-family="sans-serif" font-size="12">Failure theory: alpha</text>
+</svg>

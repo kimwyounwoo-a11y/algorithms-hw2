@@ -84,6 +84,17 @@ class HashTable(Generic[_Value]):
             node = node.next
         return False
 
+    def find(self, key: str) -> _Value:
+        """Return the value for key, raising KeyError when key is absent."""
+        return self.get(key)
+
+    def __contains__(self, key: object) -> bool:
+        return isinstance(key, str) and self.contains(key)
+
+    @property
+    def load_factor(self) -> float:
+        return self._size / len(self._buckets)
+
     def probe_count(self, key: str) -> int:
         """Return the number of chain nodes inspected when searching for key."""
         node = self._buckets[self._bucket_index(key, len(self._buckets))]

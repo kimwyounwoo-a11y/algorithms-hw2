@@ -1,6 +1,7 @@
 import unittest
 
 from src.hash_table import HashTable
+from src.linear_probing_table import LinearProbingTable
 
 
 class HashTableTests(unittest.TestCase):
@@ -13,6 +14,18 @@ class HashTableTests(unittest.TestCase):
             self.table.get("missing")
         with self.assertRaises(KeyError):
             self.table.delete("missing")
+
+    def test_shared_interface_supports_find_length_membership_and_load_factor(self):
+        self.assertEqual(len(self.table), 0)
+        self.assertEqual(self.table.load_factor, 0)
+        self.table.put("key", "value")
+
+        self.assertEqual(self.table.find("key"), "value")
+        self.assertEqual(self.table.get("key"), "value")
+        self.assertEqual(len(self.table), 1)
+        self.assertIn("key", self.table)
+        self.assertNotIn("missing", self.table)
+        self.assertEqual(self.table.load_factor, 1 / self.table.capacity)
 
     def test_colliding_keys_can_be_retrieved_and_deleted_independently(self):
         # "a", "i", and "q" share a bucket at the initial capacity of 8.
@@ -61,6 +74,57 @@ class HashTableTests(unittest.TestCase):
         for key, value in entries:
             with self.subTest(key=key):
                 self.assertEqual(self.table.get(key), value)
+
+
+class LinearProbingTableTests(HashTableTests):
+    def setUp(self):
+        self.table = LinearProbingTable()
+
+    def test_none_max_load_disables_resizing_and_counts_probes(self):
+        table = LinearProbingTable(capacity=8, max_load=None)
+        for key in ("a", "i", "q"):
+            table.put(key, key)
+
+        self.assertEqual(table.capacity, 8)
+        self.assertEqual(len(table), 3)
+        self.assertEqual(table.probe_count("q"), 3)
+        self.assertEqual(table.probe_count("i"), 2)
+        self.assertEqual(table.probe_count("a"), 1)
+        self.assertEqual(table.probe_count("y"), 4)
+
+    def test_probe_wraps_from_last_slot_to_first_slot(self):
+        table = LinearProbingTable(capacity=4, max_load=None)
+        table.put("c", "last")
+        table.put("g", "wrapped")
+        table.put("k", "next")
+
+        self.assertEqual(table.find("c"), "last")
+        self.assertEqual(table.find("g"), "wrapped")
+        self.assertEqual(table.find("k"), "next")
+        self.assertEqual(table.probe_count("c"), 1)
+        self.assertEqual(table.probe_count("g"), 2)
+        self.assertEqual(table.probe_count("k"), 3)
+
+    def test_full_table_raises_on_new_key_and_reuses_deleted_slot(self):
+        table = LinearProbingTable(capacity=3, max_load=None)
+        table.put("a", 1)
+        table.put("b", 2)
+        table.put("c", 3)
+
+        self.assertEqual(table.load_factor, 1.0)
+        self.assertEqual(len(table), 3)
+        self.assertIn("b", table)
+        self.assertEqual(table.find("c"), 3)
+        with self.assertRaises(OverflowError):
+            table.put("d", 4)
+
+        table.delete("b")
+        self.assertNotIn("b", table)
+        table.put("d", 4)
+        self.assertEqual(table.get("a"), 1)
+        self.assertEqual(table.get("c"), 3)
+        self.assertEqual(table.get("d"), 4)
+        self.assertEqual(table.load_factor, 1.0)
 
     def test_none_max_load_disables_resizing_and_counts_probes(self):
         table = HashTable(capacity=8, max_load=None)

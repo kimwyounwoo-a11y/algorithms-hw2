@@ -1,6 +1,7 @@
 """A string-keyed hash table using separate chaining."""
 
 import math
+from collections.abc import Iterator
 from typing import Generic, TypeVar
 
 
@@ -93,6 +94,25 @@ class HashTable(Generic[_Value]):
                 return probes
             node = node.next
         return probes
+
+    def iter_bucket_items(self, index: int) -> Iterator[tuple[str, _Value]]:
+        """Yield the key/value pairs in one bucket, in chain order."""
+        if index < 0 or index >= len(self._buckets):
+            raise IndexError(index)
+        node = self._buckets[index]
+        while node is not None:
+            yield node.key, node.value
+            node = node.next
+
+    def hash_steps(self, key: str) -> tuple[tuple[str, int, int], ...]:
+        """Return each Horner step as (character, previous value, new value)."""
+        value = 0
+        steps = []
+        for character in key:
+            previous = value
+            value = (value * 31 + ord(character)) % len(self._buckets)
+            steps.append((character, previous, value))
+        return tuple(steps)
 
     def delete(self, key: str) -> None:
         index = self._bucket_index(key, len(self._buckets))

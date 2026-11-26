@@ -10,6 +10,7 @@ from urllib.parse import parse_qsl, unquote
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src import shortener
+from src.linear_probing_table import LinearProbingTable
 
 _STYLE = """
 body { font: 16px system-ui, sans-serif; line-height: 1.5; margin: 0 auto;
@@ -125,6 +126,49 @@ class ShortenerHandler(BaseHTTPRequestHandler):
             "<main><h1>Current hash table</h1>",
             '<p><a href="/">Back to URL shortener</a></p>',
         ]
+        if isinstance(table, LinearProbingTable):
+            for slot_index, url, code in table.iter_slots():
+                parts.append(
+                    f'<section class="bucket"><div class="bucket-label">'
+                    f"Slot {slot_index}</div><div class=\"chain\">"
+                )
+                if url is None:
+                    parts.append('<span class="empty">empty</span>')
+                else:
+                    steps = table.hash_steps(url)
+                    step_items = []
+                    for character, previous, value in steps:
+                        calculation = (
+                            f"h = ({previous} * 31 + ord({character!r})) "
+                            f"% {table.capacity} = {value}"
+                        )
+                        step_items.append(
+                            f"<li><code>{html.escape(calculation)}</code></li>"
+                        )
+                    home_index = steps[-1][2] if steps else 0
+                    slots_inspected = (
+                        (slot_index - home_index) % table.capacity + 1
+                    )
+                    short_link = f"/{code}"
+                    parts.append(
+                        '<article class="node">'
+                        f"<p><strong>URL key:</strong> <code>{html.escape(url)}</code></p>"
+                        f"<p><strong>Short code:</strong> <code>{html.escape(code)}</code></p>"
+                        '<p><strong>Short link:</strong> '
+                        f'<a href="/{html.escape(code, quote=True)}">'
+                        f"{html.escape(short_link)}</a></p>"
+                        f"<p>Home slot: {home_index}</p>"
+                        f"<p>Slots inspected from home: {slots_inspected} "
+                        f"(displacement: {slots_inspected - 1})</p>"
+                        "<details><summary>Horner hash calculation</summary>"
+                        f"<ol>{''.join(step_items)}</ol>"
+                        f"<p>Initial slot index: {home_index}</p></details>"
+                        "</article>"
+                    )
+                parts.append("</div></section>")
+            parts.append("</main>")
+            return "".join(parts)
+
         for bucket_index in range(table.capacity):
             entries = list(table.iter_bucket_items(bucket_index))
             parts.append(
@@ -191,8 +235,15 @@ class ShortenerHandler(BaseHTTPRequestHandler):
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run the URL shortener HTTP server.")
     parser.add_argument("--port", type=int, default=8000)
+    parser.add_argument(
+        "--table",
+        choices=("chaining", "linear"),
+        default="chaining",
+        help="hash table implementation to use",
+    )
     args = parser.parse_args()
 
+    shortener.configure_table(args.table)
     server = HTTPServer(("0.0.0.0", args.port), ShortenerHandler)
     print(f"Serving URL shortener on port {args.port}")
     try:

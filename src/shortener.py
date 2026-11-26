@@ -4,11 +4,28 @@ from urllib.parse import urlsplit
 
 from src.base62 import encode
 from src.hash_table import HashTable
+from src.linear_probing_table import LinearProbingTable
 
-_URL_TO_CODE: HashTable[str] = HashTable()
-_CODE_TO_URL: HashTable[str] = HashTable()
+_Table = HashTable[str] | LinearProbingTable[str]
+_URL_TO_CODE: _Table = HashTable()
+_CODE_TO_URL: _Table = HashTable()
 _NEXT_ID = 0
 _MAX_URL_LENGTH = 2048
+
+
+def configure_table(table_type: str = "chaining") -> None:
+    """Select the backing table implementation and reset in-memory mappings."""
+    global _URL_TO_CODE, _CODE_TO_URL, _NEXT_ID
+
+    if table_type == "chaining":
+        _URL_TO_CODE = HashTable()
+        _CODE_TO_URL = HashTable()
+    elif table_type == "linear":
+        _URL_TO_CODE = LinearProbingTable()
+        _CODE_TO_URL = LinearProbingTable()
+    else:
+        raise ValueError("table_type must be 'chaining' or 'linear'")
+    _NEXT_ID = 0
 
 
 def _validate_url(url: object) -> str:

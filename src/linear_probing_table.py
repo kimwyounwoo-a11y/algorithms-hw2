@@ -1,5 +1,6 @@
 """A fixed-capacity string-keyed hash table using linear probing."""
 
+from collections.abc import Iterator
 from typing import Generic, TypeVar
 
 
@@ -98,6 +99,24 @@ class LinearProbingTable(Generic[_Value]):
             if entry.key == key:
                 return offset + 1
         return len(self._slots)
+
+    def iter_slots(self) -> Iterator[tuple[int, str | None, _Value | None]]:
+        """Yield each slot index, key, and value, including empty slots."""
+        for index, entry in enumerate(self._slots):
+            if entry is None:
+                yield index, None, None
+            else:
+                yield index, entry.key, entry.value
+
+    def hash_steps(self, key: str) -> tuple[tuple[str, int, int], ...]:
+        """Return each Horner step as (character, previous value, new value)."""
+        value = 0
+        steps = []
+        for character in key:
+            previous = value
+            value = (value * 31 + ord(character)) % len(self._slots)
+            steps.append((character, previous, value))
+        return tuple(steps)
 
     def delete(self, key: str) -> None:
         found, _ = self._find_slot(key)

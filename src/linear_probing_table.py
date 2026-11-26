@@ -6,6 +6,10 @@ from typing import Generic, TypeVar
 _Value = TypeVar("_Value")
 
 
+class TableFullError(OverflowError, RuntimeError):
+    """Raised when insertion cannot find an available slot."""
+
+
 class _Entry(Generic[_Value]):
     __slots__ = ("key", "value")
 
@@ -17,7 +21,7 @@ class _Entry(Generic[_Value]):
 class LinearProbingTable(Generic[_Value]):
     """Store keys by probing consecutive slots from their Horner hash index."""
 
-    _INITIAL_CAPACITY = 8
+    _INITIAL_CAPACITY = 64
 
     def __init__(self, capacity: int = _INITIAL_CAPACITY, max_load: None = None):
         if isinstance(capacity, bool) or not isinstance(capacity, int):
@@ -62,7 +66,7 @@ class LinearProbingTable(Generic[_Value]):
             entry.value = value
             return
         if empty is None:
-            raise RuntimeError("hash table is full")
+            raise TableFullError("hash table is full")
 
         self._slots[empty] = _Entry(key, value)
         self._size += 1
@@ -89,9 +93,28 @@ class LinearProbingTable(Generic[_Value]):
         for offset in range(len(self._slots)):
             index = (start + offset) % len(self._slots)
             entry = self._slots[index]
-            if entry is None or entry.key == key:
+            if entry is None:
+                return offset + 1
+            if entry.key == key:
                 return offset + 1
         return len(self._slots)
+
+    def delete(self, key: str) -> None:
+        found, _ = self._find_slot(key)
+        if found is None:
+            raise KeyError(key)
+        self._slots[found] = None
+        self._size -= 1
+        following_entries = []
+        index = (found + 1) % len(self._slots)
+        while self._slots[index] is not None:
+            entry = self._slots[index]
+            self._slots[index] = None
+            self._size -= 1
+            following_entries.append(entry)
+            index = (index + 1) % len(self._slots)
+        for entry in following_entries:
+            self.put(entry.key, entry.value)
 
     def __len__(self) -> int:
         return self._size

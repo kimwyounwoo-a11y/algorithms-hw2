@@ -1,8 +1,10 @@
 """HTTP server for the in-memory URL shortener."""
 
 import argparse
+import errno
 import html
 import sys
+from http.client import HTTPConnection, HTTPException
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from urllib.parse import parse_qsl, unquote
@@ -244,14 +246,44 @@ def main() -> None:
     args = parser.parse_args()
 
     shortener.configure_table(args.table)
-    server = HTTPServer(("0.0.0.0", args.port), ShortenerHandler)
-    print(f"Serving URL shortener on port {args.port}")
+    server = _create_server(args.port)
+    if server is None:
+        return
+
+    print(f"Serving URL shortener on port {server.server_port}")
+    if args.port != 0 and server.server_port != args.port:
+        print(f"Port {args.port} is already in use; using port {server.server_port}.")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
         print("\nStopping URL shortener.")
     finally:
         server.server_close()
+
+
+def _create_server(port: int) -> HTTPServer | None:
+    try:
+        return HTTPServer(("0.0.0.0", port), ShortenerHandler)
+    except OSError as error:
+        if error.errno != errno.EADDRINUSE:
+            raise
+        if _is_url_shortener_running(port):
+            print(f"URL shortener is already running on port {port}")
+            return None
+        return HTTPServer(("0.0.0.0", 0), ShortenerHandler)
+
+
+def _is_url_shortener_running(port: int) -> bool:
+    connection = HTTPConnection("127.0.0.1", port, timeout=1)
+    try:
+        connection.request("GET", "/")
+        response = connection.getresponse()
+        body = response.read()
+        return response.status == 200 and b"<h1>URL Shortener</h1>" in body
+    except (OSError, HTTPException):
+        return False
+    finally:
+        connection.close()
 
 
 if __name__ == "__main__":
